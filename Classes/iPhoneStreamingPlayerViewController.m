@@ -28,7 +28,9 @@
 #import <CFNetwork/CFNetwork.h>
 
 @implementation iPhoneStreamingPlayerViewController
-
+{
+    BOOL isDragging_;
+}
 //
 // setButtonImageNamed:
 //
@@ -211,7 +213,10 @@
 	else
 	{
 		[streamer stop];
-	}
+        [progressSlider setEnabled:NO];
+        positionLabel.text = @"";
+        [progressSlider setValue:0];
+    }
 }
 
 //
@@ -229,7 +234,14 @@
 		double newSeekTime = (aSlider.value / 100.0) * streamer.duration;
 		[streamer seekToTime:newSeekTime];
 	}
+    isDragging_ = NO;
 }
+
+- (IBAction)sliderBeginMove:(UISlider *)aSlider
+{
+    isDragging_ = YES;
+}
+
 
 //
 // playbackStateChanged:
@@ -252,6 +264,7 @@
 		[self destroyStreamer];
 		[self setButtonImageNamed:@"playbutton.png"];
 	}
+    NSLog(@"%d",streamer.state);
 }
 
 //
@@ -267,12 +280,14 @@
 		double progress = streamer.progress;
 		double duration = streamer.duration;
 		
-		if (duration > 0)
+		if (duration > 0 && !isDragging_)
 		{
+            
+            
 			[positionLabel setText:
-				[NSString stringWithFormat:@"Time Played: %.1f/%.1f seconds",
-					progress,
-					duration]];
+				[NSString stringWithFormat:@"Time Played: %d M %d S /%d M %d S",
+					(int)progress/60,((int)progress)%60,
+					(int)duration/60,((int)duration)%60]];
 			[progressSlider setEnabled:YES];
 			[progressSlider setValue:100 * progress / duration];
 		}

@@ -42,5 +42,7 @@
 - (void)updateProgress:(NSTimer *)aNotification;
 - (IBAction)sliderMoved:(UISlider *)aSlider;
 
+- (IBAction)sliderBeginMove:(UISlider *)aSlider;
+
 @end
 
