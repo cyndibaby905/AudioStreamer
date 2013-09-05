@@ -1032,7 +1032,7 @@ static void ASReadStreamCallBack
 			Boolean discontinuity;
 			err = AudioQueueGetCurrentTime(audioQueue, NULL, &queueTime, &discontinuity);
 
-			const OSStatus AudioQueueStopped = 0x73746F70; // 0x73746F70 is 'stop'
+			const OSStatus AudioQueueStopped = kAudioQueueErr_InvalidRunState; // 0x73746F70 is 'stop'
 			if (err == AudioQueueStopped)
 			{
 				return lastProgress;
@@ -1047,6 +1047,9 @@ static void ASReadStreamCallBack
 			{
 				progress = 0.0;
 			}
+            if (progress > [self duration]) {
+                progress = [self duration];
+            }
 			
 			lastProgress = progress;
 			return progress;

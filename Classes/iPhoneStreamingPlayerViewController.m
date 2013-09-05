@@ -285,7 +285,7 @@
             
             
 			[positionLabel setText:
-				[NSString stringWithFormat:@"Time Played: %d M %d S /%d M %d S",
+				[NSString stringWithFormat:@"Time Played: %d分%d秒 /%d分%d秒",
 					(int)progress/60,((int)progress)%60,
 					(int)duration/60,((int)duration)%60]];
 			[progressSlider setEnabled:YES];
