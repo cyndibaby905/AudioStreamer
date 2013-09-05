@@ -147,7 +147,7 @@ extern NSString * const ASStatusChangedNotification;
 	CFReadStreamRef stream;
 	NSNotificationCenter *notificationCenter;
 	
-	UInt32 bitRate;				// Bits per second in the file
+	//UInt32 bitRate;				// Bits per second in the file
 	NSInteger dataOffset;		// Offset of the first audio packet in the stream
 	NSInteger fileLength;		// Length of the file in bytes
 	NSInteger seekByteOffset;	// Seek offset within the file in bytes
@@ -175,7 +175,7 @@ extern NSString * const ASStatusChangedNotification;
 @property (readonly) AudioStreamerState state;
 @property (readonly) double progress;
 @property (readonly) double duration;
-@property (readwrite) UInt32 bitRate;
+//@property (readwrite) UInt32 bitRate;
 @property (readonly) NSDictionary *httpHeaders;
 @property (copy,readwrite) NSString *fileExtension;
 

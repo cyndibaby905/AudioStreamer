@@ -203,7 +203,7 @@ static void ASReadStreamCallBack
 @synthesize errorCode;
 @synthesize state;
 @synthesize laststate;
-@synthesize bitRate;
+//@synthesize bitRate;
 @synthesize httpHeaders;
 @synthesize fileExtension;
 
@@ -1134,10 +1134,10 @@ static void ASReadStreamCallBack
 		return 8.0 * averagePacketByteSize / packetDuration;
 	}
 	
-	if (bitRate)
+	/*if (bitRate )
 	{
 		return (double)bitRate;
-	}
+	}*/
 	
 	return 0;
 }
@@ -1739,7 +1739,7 @@ static void ASReadStreamCallBack
 			return;
 		}
 		
-		if (bitRate == 0)
+		/*if (bitRate == 0)
 		{
 			//
 			// m4a and a few other formats refuse to parse the bitrate so
@@ -1748,7 +1748,7 @@ static void ASReadStreamCallBack
 			// class if needed.
 			//
 			bitRate = ~0;
-		}
+		}*/
 		
 		// we have successfully read the first packests from the audio stream, so
 		// clear the "discontinuous" flag
