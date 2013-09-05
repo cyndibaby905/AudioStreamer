@@ -611,6 +611,66 @@ static void ASReadStreamCallBack
 }
 
 //
+// hintForHTTPHeaders:
+//
+// Generates a first guess for the file type based on the "Content-Type" in response header
+//
+// Parameters:
+//    httpHeaders - the http Headers
+//
+// returns a file type hint that can be passed to the AudioFileStream
+//
++ (AudioFileTypeID)hintForHTTPHeaders:(NSDictionary *)httpHeaders
+{
+	AudioFileTypeID fileTypeHint = kAudioFileAAC_ADTSType;
+	if ([httpHeaders[@"Content-Type"] isKindOfClass:[NSString class]]) {
+        NSString *mimeType = [httpHeaders[@"Content-Type"] lowercaseString];
+        if ([mimeType isEqual:@"audio/mp3"] ||
+            [mimeType isEqual:@"audio/mpeg"])
+        {
+            fileTypeHint = kAudioFileMP3Type;
+        }
+        else if ([mimeType isEqual:@"audio/wav"] ||
+                 [mimeType isEqual:@"audio/wav"] ||
+                 [mimeType isEqualToString:@"audio/x-wav"])
+        {
+            fileTypeHint = kAudioFileWAVEType;
+        }
+        else if ([mimeType isEqual:@"audio/x-aifc"])
+        {
+            fileTypeHint = kAudioFileAIFCType;
+        }
+        else if ([mimeType isEqual:@"aiff"] ||
+                 [mimeType isEqualToString:@"audio/x-aiff"])
+        {
+            fileTypeHint = kAudioFileAIFFType;
+        }
+        else if ([mimeType isEqual:@"audio/m4a"] ||
+                 [mimeType isEqualToString:@"audio/x-m4a"])
+        {
+            fileTypeHint = kAudioFileM4AType;
+        }
+        else if ([mimeType isEqual:@"video/mp4"] ||
+                 [mimeType isEqualToString:@"video/mpeg4"])
+        {
+            fileTypeHint = kAudioFileMPEG4Type;
+        }
+        else if ([mimeType isEqual:@"audio/x-caf"])
+        {
+            fileTypeHint = kAudioFileCAFType;
+        }
+        else if ([mimeType isEqual:@"audio/aac"])
+        {
+            fileTypeHint = kAudioFileAAC_ADTSType;
+        }
+        
+    }
+    
+	return fileTypeHint;
+}
+
+
+//
 // openReadStream
 //
 // Open the audioFileStream to parse data and the fileHandle as the data
@@ -1302,7 +1362,7 @@ static void ASReadStreamCallBack
 				self.fileExtension = [[url path] pathExtension];
 			}
 			AudioFileTypeID fileTypeHint =
-				[AudioStreamer hintForFileExtension:self.fileExtension];
+				[AudioStreamer hintForHTTPHeaders:self.httpHeaders];
 
 			// create an audio file stream parser
 			err = AudioFileStreamOpen(self, ASPropertyListenerProc, ASPacketsProc, 

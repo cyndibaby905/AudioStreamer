@@ -275,7 +275,7 @@
 //
 - (void)updateProgress:(NSTimer *)updatedTimer
 {
-	if (streamer.bitRate != 0.0)
+	if (streamer.calculatedBitRate != 0.0)
 	{
 		double progress = streamer.progress;
 		double duration = streamer.duration;
