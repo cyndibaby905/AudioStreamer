@@ -97,7 +97,7 @@
 	}
 
 	[self destroyStreamer];
-	
+    
 	NSString *escapedValue =
 		[(NSString *)CFURLCreateStringByAddingPercentEscapes(
 			nil,
@@ -219,6 +219,7 @@
     }
 }
 
+
 //
 // sliderMoved:
 //
@@ -263,6 +264,8 @@
 	{
 		[self destroyStreamer];
 		[self setButtonImageNamed:@"playbutton.png"];
+        positionLabel.text = @"";
+        [progressSlider setValue:0];
 	}
     NSLog(@"%d",streamer.state);
 }
@@ -283,13 +286,25 @@
 		if (duration > 0 && !isDragging_)
 		{
             
+            if (!streamer.isSeeking && streamer.state == AS_PLAYING ) {
+                [positionLabel setText:
+                 [NSString stringWithFormat:@"Time Played: %d分%d秒 /%d分%d秒",
+                  (int)progress/60,((int)progress)%60,
+                  (int)duration/60,((int)duration)%60]];
+                [progressSlider setEnabled:YES];
+                [progressSlider setValue:100 * progress / duration];
+            }
+            else {
+                progress = progressSlider.value/progressSlider.maximumValue * duration;
+                [positionLabel setText:
+                 [NSString stringWithFormat:@"Time Played: %d分%d秒 /%d分%d秒",
+                  (int)progress/60,((int)progress)%60,
+                  (int)duration/60,((int)duration)%60]];
+                [progressSlider setEnabled:YES];
+                //[progressSlider setValue:100 * progress / duration];
+            }
             
-			[positionLabel setText:
-				[NSString stringWithFormat:@"Time Played: %d分%d秒 /%d分%d秒",
-					(int)progress/60,((int)progress)%60,
-					(int)duration/60,((int)duration)%60]];
-			[progressSlider setEnabled:YES];
-			[progressSlider setValue:100 * progress / duration];
+			
 		}
 		else
 		{

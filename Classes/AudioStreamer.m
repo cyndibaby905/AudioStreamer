@@ -1162,6 +1162,16 @@ static void ASReadStreamCallBack
 }
 
 //
+// isSeeking
+//
+// Indicating wether seek was requested.
+//
+- (BOOL)isSeeking
+{
+    return seekWasRequested;
+}
+
+//
 // pause
 //
 // A togglable pause function.

@@ -178,6 +178,8 @@ extern NSString * const ASStatusChangedNotification;
 //@property (readwrite) UInt32 bitRate;
 @property (readonly) NSDictionary *httpHeaders;
 @property (copy,readwrite) NSString *fileExtension;
+@property (readonly) BOOL isSeeking;
+
 
 - (id)initWithURL:(NSURL *)aURL;
 - (void)start;
