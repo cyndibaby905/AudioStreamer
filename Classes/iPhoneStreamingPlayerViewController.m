@@ -308,6 +308,13 @@
 		}
 		else
 		{
+            if(abs(duration) < 0.001)
+            {
+                [positionLabel setText:
+                 [NSString stringWithFormat:@"Time Played: %d分%d秒",
+                  (int)progress/60,((int)progress)%60]];
+                
+            }
 			[progressSlider setEnabled:NO];
 		}
 	}

@@ -1107,8 +1107,9 @@ static void ASReadStreamCallBack
 			{
 				progress = 0.0;
 			}
-            if (progress > [self duration]) {
-                progress = [self duration];
+            double duration = [self duration];
+            if (progress > duration && abs(duration) > 0.01) {
+                progress = duration;
             }
 			
 			lastProgress = progress;
